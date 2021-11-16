@@ -1,3 +1,3 @@
-function String.trim(s)
+function string.trim(s)
   return s:match'^%s*(.*)'
 end
