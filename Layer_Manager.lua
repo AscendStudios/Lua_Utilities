@@ -9,7 +9,7 @@ function filter_contorls(ctls)
   prefix = "LAYER:"
   for name, ctl in pairs(ctls) do
     if string.find(name, prefix) then
-      filtered[string.sub(name, string.trim(#prefix +1))] = ctl
+      filtered[string.trim(string.sub(name, #prefix +1))] = ctl
     end
   end
   return filtered
