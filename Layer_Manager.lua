@@ -2,7 +2,7 @@ require "Advanced_Tables"
 require "Advanced_String"
 require "json"
 util = require "Utilities"
-local env = require "UCI_Environment"
+
 
 main = Component.New("UCI Environment")
 --layer = Component.New("Layer Comntrol")
