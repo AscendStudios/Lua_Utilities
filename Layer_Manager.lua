@@ -1,5 +1,6 @@
 require "Advanced_Tables"
 require "Advanced_String"
+require "json"
 util = require "Utilities"
 local env = require "UCI_Environment"
 
@@ -29,11 +30,8 @@ end
 function events()
   for name, ctl in pairs(Controls) do
     ctl.EventHandler = function()
-        if ctl.Boolean then
-          if table.contains(main.Layers.Choices, name) then
-            main.Layers.String = name end
-          else
-            print("Unexpected Layer Request!")
+      local data = {['String'] = name, ['Boolean'] = ctl.Boolean}
+      main.json_data.String = json.encode(data)
         util.exclude(ctl, Controls)
     end
   end
