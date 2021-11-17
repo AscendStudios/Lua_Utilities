@@ -101,6 +101,8 @@ function UCI_Environment.read_config()
 end
 
 function UCI_Environment.write_default(layer_table)
+--TODO: Add in a meta tabel for optional args
+
   --Check to see if the control exists--
   if table.contains(Controls.Orphaned_Layer_Controls, layer_table.Name) then
       layer_table.IsControlable = true
@@ -114,20 +116,33 @@ function UCI_Environment.write_default(layer_table)
 end
 
 function UCI_Environment.reconcile_data()
+  --Adds missing config data
   for uci_name, pages in pairs(UCI_Environment.MAP) do
     for page_name, layers in pairs(pages) do
       for index, layer in pairs(layers) do
-        if not table.contains(
-          UCI_Environment.CONFIG,
-          uci_name[page_name][index]
-        ) then
-          uci_name[page_name][index] = UCI_Environment.write_default(layer)
-          UCI_Environment.CONFIG[uci_name][page_name][index] = uci_name[page_name][index]
+        --Check to see if the data in the map is in the config
+        if not UCI_Environment.CONFIG[uci_name][page_name][index].Name then
+          UCI_Environment.CONFIG[uci_name][page_name][index] = UCI_Environment.write_default(layer)
           --Controls.Orphaned_Layer_Controls
         end
       end
     end
   end
+  --Remove old data from CONFIG
+  for uci_name, pages in pairs(UCI_Environment.CONFIG) do
+    for page_name, layers in pairs(pages) do
+      for index, layer in pairs(layers) do
+        --Check to see if the data in the CONFIG is in the MAP
+        if not UCI_Environment.MAP[uci_name][page_name][index].Name then
+          table.remove(
+            UCI_Environment.CONFIG,
+            UCI_Environment.CONFIG[uci_name][page_name][index]
+          )
+        end
+      end
+    end
+  end
+
 end
 
 
