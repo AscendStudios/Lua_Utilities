@@ -40,7 +40,6 @@ function UCI_Environment.get_uci_map()
       user_interfaces[uci.Name][page.Name] = {}
       for index, layer in pairs(page.Layers) do
         user_interfaces[uci.Name][page.Name][index] = layer
-        --print("HERE: ",  table.print(layer))
       end
     end
   end
@@ -77,7 +76,6 @@ end
 function UCI_Environment.get_layers(uci_name, page_name)
   local layer_list = {}
   for index, layer in ipairs(UCI_Environment.MAP[uci_name][page_name]) do
-    print(index, layer)
     table.insert(layer_list, layer.Name)
   end
   table.sort(layer_list)
@@ -157,9 +155,6 @@ function UCI_Environment.reconcile_data()
   UCI_Environment.CONFIG = UCI_Environment.write_config(UCI_Environment.CONFIG)
 end
 
-function layer_control()
-
-end
 ---------------------------------------------------
 --------------DEFINE MODULE VARIABLES--------------
 ---------------------------------------------------
@@ -172,14 +167,14 @@ UCI_Environment.CONFIG = UCI_Environment.read_config()
 ---------------------------------------------------
 --------------INIT MODULE Environment--------------
 ---------------------------------------------------
-for uci_name, pages in pairs(UCI_Environment.MAP) do
-  for page_name, layers in pairs(pages) do
-    for index, layer in pairs(layers) do
-      --print(index, layer)
-    end
-  end
-end
---UCI_Environment.reconcile_data()
+-- for uci_name, pages in pairs(UCI_Environment.MAP) do
+--   for page_name, layers in pairs(pages) do
+--     for index, layer in pairs(layers) do
+--       --print(index, layer)
+--     end
+--   end
+-- end
+UCI_Environment.reconcile_data()
 
 
 ------------------------------------------
