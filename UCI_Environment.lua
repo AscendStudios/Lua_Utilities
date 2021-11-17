@@ -84,21 +84,31 @@ function UCI_Environment.get_layers(uci_name, page_name)
   return layer_list
 end
 
-function UCI_Environment.read_config()
-  config= {}
-  config.root = "design/AS-Configs/"
-  config.filename = "layers.json"
-  config.path = config.root..'/'..config.filename
-
---Create directory and file if needed--
-  if not dir.get(config.root) then                                              --Create both directory and file
-    dir.create(config.root)
-    rj.dump({rj.null()}, config.path, {pretty=true})
-  elseif not table.contains(dir.get(config.root), config.filename) then         --Create just the file, not the directory
-    rj.dump({rj.null()}, config.path, {pretty=true})
-  end
+function UCI_Environment.write_config(config_table)
+  local config= {}
+  config.path = "design/AS-Configs/layers.json"
+  rj.dump(config_table, config.path, {pretty=true})
   return rj.load(config.path)
 end
+
+function UCI_Environment.read_config()
+  local config= {}
+  config.root = "design/AS-Configs/"
+  config.filename = "layers.json"
+
+--Create directory and file if needed--
+  if not dir.get(config.root) then
+    print("Creating AS Config directory")                                             --Create both directory and file
+    dir.create(config.root)
+    print("Creating layer.json")
+    UCI_Environment.write_config({rj.null()})
+  elseif not table.contains(dir.get(config.root), config.filename) then         --Create just the file, not the directory
+    print("Creating layer.json")
+    config.data = UCI_Environment.write_config({rj.null()})
+  end
+  return rj.load(config.data)
+end
+
 
 function UCI_Environment.write_default(layer_table)
 --TODO: Add in a meta tabel for optional args
@@ -123,7 +133,7 @@ function UCI_Environment.reconcile_data()
         --Check to see if the data in the map is in the config
         if not UCI_Environment.CONFIG[uci_name][page_name][index].Name then
           UCI_Environment.CONFIG[uci_name][page_name][index] = UCI_Environment.write_default(layer)
-          --Controls.Orphaned_Layer_Controls
+          print("Updating json file")
         end
       end
     end
@@ -134,6 +144,7 @@ function UCI_Environment.reconcile_data()
       for index, layer in pairs(layers) do
         --Check to see if the data in the CONFIG is in the MAP
         if not UCI_Environment.MAP[uci_name][page_name][index].Name then
+          print("Removing old data from json file")
           table.remove(
             UCI_Environment.CONFIG,
             UCI_Environment.CONFIG[uci_name][page_name][index]
