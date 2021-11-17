@@ -95,8 +95,9 @@ function UCI_Environment.read_config()
   local config= {}
   config.root = "design/AS-Configs/"
   config.filename = "layers.json"
+  config.path = "design/AS-Configs/layers.json"
 
---Create directory and file if needed--
+  --Create directory and file if needed--
   if not dir.get(config.root) then
     print("Creating AS Config directory")                                             --Create both directory and file
     dir.create(config.root)
@@ -106,12 +107,12 @@ function UCI_Environment.read_config()
     print("Creating layer.json")
     config.data = UCI_Environment.write_config({rj.null()})
   end
-  return rj.load(config.data)
+  return rj.load(config.path)
 end
 
 
 function UCI_Environment.write_default(layer_table)
---TODO: Add in a meta tabel for optional args
+  --TODO: Add in a meta tabel for optional args
 
   --Check to see if the control exists--
   if table.contains(Controls.Orphaned_Layer_Controls, layer_table.Name) then
@@ -153,10 +154,12 @@ function UCI_Environment.reconcile_data()
       end
     end
   end
-
+  UCI_Environment.CONFIG = UCI_Environment.write_config(UCI_Environment.CONFIG)
 end
 
+function layer_control()
 
+end
 ---------------------------------------------------
 --------------DEFINE MODULE VARIABLES--------------
 ---------------------------------------------------
