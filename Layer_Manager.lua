@@ -3,6 +3,8 @@ require "Advanced_String"
 util = require "Utilities"
 
 main = Component.New("UCI Environment")
+--layer = Component.New("Layer Comntrol")
+
 
 function filter_contorls(ctls)
   filtered = {}
@@ -15,10 +17,6 @@ function filter_contorls(ctls)
   return filtered
 end
 
-Controls = filter_contorls(Controls)
-
-main["UCI_Buttons"].Choices = table.keys(Controls)
-
 function events()
   for name, ctl in pairs(Controls) do
     ctl.EventHandler = function()
@@ -27,5 +25,9 @@ function events()
     end
   end
 end
+
+Controls = filter_contorls(Controls)
+
+main["Orphaned_Layer_Controls"].Choices = table.keys(Controls)
 
 events()
