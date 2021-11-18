@@ -103,7 +103,7 @@ function UCI_Environment.read_config()
     UCI_Environment.write_config({rj.null()})
   elseif not table.contains(dir.get(config.root), config.filename) then         --Create just the file, not the directory
     print("Creating layer.json")
-    config.data = UCI_Environment.write_config({rj.null()})
+    config.data = UCI_Environment.write_config(UCI_Environment.MAP)
   end
   return rj.load(config.path)
 end
@@ -111,14 +111,7 @@ end
 
 function UCI_Environment.write_default(layer_table)
   --TODO: Add in a meta tabel for optional args
-
-  --Check to see if the control exists--
-  if table.contains(Controls.Orphaned_Layer_Controls, layer_table.Name) then
-      layer_table.IsControlable = true
-      table.remove(Controls.Orphaned_Layer_Controls, layer_table.Name)
-  else
-    layer_table.IsControlable = false
-  end
+  layer_table.IsControlable = false
   layer_table.Transition = "None"
   layer_table.ExclusionGroup = 'Main'
   return layer_table
@@ -130,28 +123,28 @@ function UCI_Environment.reconcile_data()
     for page_name, layers in pairs(pages) do
       for index, layer in pairs(layers) do
         --Check to see if the data in the map is in the config
-        if not UCI_Environment.CONFIG[uci_name][page_name][index].Name then
+        local layer_data = table.keys(layer)
+        if not table.contains(layer_data, "IsControlable") then
           UCI_Environment.CONFIG[uci_name][page_name][index] = UCI_Environment.write_default(layer)
-          print("Updating json file")
         end
       end
     end
   end
   --Remove old data from CONFIG
-  for uci_name, pages in pairs(UCI_Environment.CONFIG) do
-    for page_name, layers in pairs(pages) do
-      for index, layer in pairs(layers) do
-        --Check to see if the data in the CONFIG is in the MAP
-        if not UCI_Environment.MAP[uci_name][page_name][index].Name then
-          print("Removing old data from json file")
-          table.remove(
-            UCI_Environment.CONFIG,
-            UCI_Environment.CONFIG[uci_name][page_name][index]
-          )
-        end
-      end
-    end
-  end
+  -- for uci_name, pages in pairs(UCI_Environment.CONFIG) do
+  --   for page_name, layers in pairs(pages) do
+  --     for index, layer in pairs(layers) do
+  --       --Check to see if the data in the CONFIG is in the MAP
+  --       if not UCI_Environment.MAP[uci_name][page_name][index].Name then
+  --         print("Removing old data from json file")
+  --         table.remove(
+  --           UCI_Environment.CONFIG,
+  --           UCI_Environment.CONFIG[uci_name][page_name][index]
+  --         )
+  --       end
+  --     end
+  --   end
+  -- end
   UCI_Environment.CONFIG = UCI_Environment.write_config(UCI_Environment.CONFIG)
 end
 
