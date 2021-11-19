@@ -5,9 +5,8 @@ util = require "Utilities"
 
 main = Component.New("UCI Environment")
 
-function filter_contorls(ctls)
+function filter_contorls(ctls, prefix)
   filtered = {}
-  prefix = "LAYER:"
   for name, ctl in pairs(ctls) do
     if string.find(name, prefix) then
       filtered[string.trim(string.sub(name, #prefix +1))] = ctl
@@ -16,12 +15,21 @@ function filter_contorls(ctls)
   return filtered
 end
 
-function events()
-  for name, ctl in pairs(Controls) do
+function layer_events(ctls)
+  for name, ctl in pairs(ctls) do
     ctl.EventHandler = function()
       local data = {['String'] = name, ['Boolean'] = ctl.Boolean}
       main.json_data.String = json.encode(data)
-        util.exclude(ctl, Controls)
+      util.exclude(ctl, ctls)
+    end
+  end
+end
+
+function page_events(ctls)
+  for name, ctl in pairs(ctls) do
+    ctl.EventHandler = function()
+      if ctl.Boolean then main.Pages.String = name end
+      util.exclude(ctl, ctls)
     end
   end
 end
@@ -29,7 +37,9 @@ end
 
 
 
-Controls = filter_contorls(Controls)
-main.Controls.Orphaned_Layer_Controls.Choices = table.keys(Controls)
+Layer_Controls = filter_contorls(Controls, "LAYER:")
+Page_Controls = filter_contorls(Controls, "PAGE:")
+main.Orphaned_Layer_Controls.Choices = table.keys(Layer_Controls)
 
-events()
+layer_events(Layer_Controls)
+page_events(Page_Controls)
