@@ -1,4 +1,4 @@
-local rj = require("rapidjson")
+local rj = require "rapidjson"
 require "Advanced_Tables"
 
 
