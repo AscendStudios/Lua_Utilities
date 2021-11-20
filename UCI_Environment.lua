@@ -148,6 +148,14 @@ function UCI_Environment.reconcile_data()
   UCI_Environment.CONFIG = UCI_Environment.write_config(UCI_Environment.CONFIG)
 end
 
+function UCI_Environment.get_layer_options(uci_name, page_name, layer_list)
+  --Returns a short list of layer options so that the entire CONFIG doesn't need ot be parsed.
+  local layer_options = {}
+  for index, layer in pairs(layer_list) do
+    layer_options[layer] = UCI_Environment.CONFIG[uci_name][page_name][index]
+  end
+end
+
 ---------------------------------------------------
 --------------DEFINE MODULE VARIABLES--------------
 ---------------------------------------------------
