@@ -1,4 +1,3 @@
-require "Advanced_Tables"
 require "Advanced_String"
 require "json"
 util = require "Utilities"
@@ -39,7 +38,6 @@ end
 
 Layer_Controls = filter_contorls(Controls, "LAYER:")
 Page_Controls = filter_contorls(Controls, "PAGE:")
-main.Orphaned_Layer_Controls.Choices = table.keys(Layer_Controls)
 
 layer_events(Layer_Controls)
 page_events(Page_Controls)
