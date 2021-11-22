@@ -3,6 +3,7 @@ require "json"
 util = require "Utilities"
 
 main = Component.New("UCI Environment")
+touch_timer = Timer.New()
 
 function filter_contorls(ctls, prefix)
   filtered = {}
@@ -12,6 +13,15 @@ function filter_contorls(ctls, prefix)
     end
   end
   return filtered
+end
+
+function other_controls(ctls)
+  filtered = {}
+  for name, ctl in pairs(ctls) do
+    if not string.find(name, "LAYERS:")  or not string.find(name, "PAGES:") then
+      table.insert(filtered, ctl)
+    end
+  end
 end
 
 function layer_events(ctls)
@@ -33,11 +43,19 @@ function page_events(ctls)
   end
 end
 
-
+function other_events(ctls)
+  for _, ctl in pairs(ctls) do
+    ctl.EventHandler = function()
+      print("Other Button Pressed")
+    end
+  end
+end
 
 
 Layer_Controls = filter_contorls(Controls, "LAYER:")
 Page_Controls = filter_contorls(Controls, "PAGE:")
+Other_Controls = other_controls(Controls)
+
 
 layer_events(Layer_Controls)
 page_events(Page_Controls)
