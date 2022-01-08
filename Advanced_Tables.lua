@@ -8,29 +8,35 @@ Advanced Table functions that are not implemented in LUA
 
 --]]
 
-function table.contains(table, element)
-  for _, value in pairs(table) do
+function table.is_empty(self)
+  return #self == 0
+end
+
+-- Adding a return on index as an option to grab --
+function table.contains(self, element, ...)
+  for index, value in pairs(self) do
+    if ... then value = value[...] end
     if value == element then
-      return true
+      return true, index
     end
   end
   return false
 end
 
-function table.reverse(tbl)
-  for i=1, math.floor(#tbl / 2) do
-    tbl[i], tbl[#tbl - i + 1] = tbl[#tbl - i + 1], tbl[i]
+function table.reverse(self)
+  for i=1, math.floor(#self / 2) do
+    self[i], self[#tbl - i + 1] = self[#tbl - i + 1], self[i]
   end
 end
 
-function table.print(tbl)
+function table.print(self)
   local name = require "json"
-  print(json.encode(tbl))
+  print(json.encode(self))
 end
 
-function table.keys(tbl)
+function table.keys(self)
   local keyset={}
-  for key in pairs(tbl) do
+  for key in pairs(self) do
     table.insert(keyset, key)
   end
   return keyset
