@@ -33,7 +33,6 @@ end
 function Utilities.exclude( ctl, ctl_table )
   if ctl.Boolean then
     for i, c in pairs( ctl_table ) do
-      print( i, c)
       if c ~= ctl then c.Boolean = false end
     end
   end
