@@ -29,10 +29,11 @@ function Utilities.read_xml(file_path)
   return xml.eval(read_file(file_path))
 end
 
-
+-- Updated to pairs instead of ipairs to handle string indexing--
 function Utilities.exclude( ctl, ctl_table )
   if ctl.Boolean then
-    for i, c in ipairs( ctl_table ) do
+    for i, c in pairs( ctl_table ) do
+      print( i, c)
       if c ~= ctl then c.Boolean = false end
     end
   end
