@@ -11,6 +11,17 @@ function read_json(file_path)
   return rj.load(file_path)
 end
 
+function define_path()
+  if System.IsEmulating then
+    --TODO: Create an HTTP Pull for the git repo if emulating
+    path = 'C:\\Users\\Casey\\Documents\\Emulating_System_Files'
+  else
+    path = 'design/ucis.json'
+    --absolute path: /usr/www//design/ucis.json
+  end
+  return path
+end
+
 --------------------------------------------
 --------------MODULE OBJECT-----------------
 --------------------------------------------
@@ -175,8 +186,9 @@ UCI_Environment.CONFIG = UCI_Environment.read_config()
 --     end
 --   end
 -- end
+--[[ Removed from code temporarily
 UCI_Environment.reconcile_data()
-
+--]]
 
 ------------------------------------------
 --------------MODULE TOOLBOX--------------
@@ -184,6 +196,7 @@ UCI_Environment.reconcile_data()
 
 function UCI_Environment.TOOLBOX()
   --TODO: Make function print in order.
+  --TODO: Make DOCSRINGS for each tool
   for name in pairs(UCI_Environment) do
     if name ~= "TOOLBOX" then
       print(name, type(UCI_Environment[name]))
