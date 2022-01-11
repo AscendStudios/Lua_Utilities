@@ -2,7 +2,7 @@ require "Advanced_String"
 require "json"
 util = require "Utilities"
 
-main = Component.New("UCI Environment")
+main = Component.New("UCI Handler")
 touch_timer = Timer.New()
 
 function filter_controls(ctls, prefix)
@@ -23,12 +23,26 @@ function other_controls(ctls)
   end
 end
 
+function get_embedded_exlusion(name)
+  --returns name, exclusion
+  local i = string.find(name, "#")
+  if i then
+    exclusion = string.sub(name, i+1, -1)
+    name = string.sub(name, 1, i-1)
+  else
+    exclusion = nil
+  end
+  return name, exclusion
+end
+
 function layer_events(ctls)
   for name, ctl in pairs(ctls) do
     ctl.EventHandler = function()
+      name, exclusion = get_embedded_exlusion(name)
       local data = {['String'] = name, ['Boolean'] = ctl.Boolean}
-      main.json_data.String = json.encode(data)
-      util.exclude(ctl, ctls)
+      if exclusion then data['ExclusionGroup'] = exclusion end
+      main.Layer_json.String = json.encode(data)
+      --util.exclude(ctl, ctls)
     end
   end
 end
