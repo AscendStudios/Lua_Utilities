@@ -11,6 +11,7 @@ function read_json(file_path)
   return rj.load(file_path)
 end
 
+--Not using yet
 function define_path()
   if System.IsEmulating then
     --TODO: Create an HTTP Pull for the git repo if emulating
@@ -106,24 +107,25 @@ function UCI_Environment.read_config()
   config.filename = "layers.json"
   config.path = "design/AS-Configs/layers.json"
 
-  --Create directory and file if needed--
+  --Create directory--
   if not dir.get(config.root) then
     print("Creating AS Config directory")                                             --Create both directory and file
     dir.create(config.root)
     print("Creating layer.json")
-    UCI_Environment.write_config({rj.null()})
+    UCI_Environment.write_config(UCI_Environment.MAP)
+  --Create file--
   elseif not table.contains(dir.get(config.root), config.filename) then         --Create just the file, not the directory
     print("Creating layer.json")
-    config.data = UCI_Environment.write_config(UCI_Environment.MAP)
+    UCI_Environment.write_config(UCI_Environment.MAP)
   end
   return rj.load(config.path)
 end
 
 
 function UCI_Environment.write_default(layer_table)
-  --TODO: Add in a meta tabel for optional args
+  --TODO: Add in a meta table for optional args
   layer_table.IsControlable = false
-  layer_table.Transition = "None"
+  layer_table.Transition = "none"
   layer_table.ExclusionGroup = 'Main'
   return layer_table
 end
@@ -187,9 +189,9 @@ UCI_Environment.CONFIG = UCI_Environment.read_config()
 --   end
 -- end
 --[[ Removed from code temporarily
-UCI_Environment.reconcile_data()
---]]
 
+--]]
+UCI_Environment.reconcile_data()
 ------------------------------------------
 --------------MODULE TOOLBOX--------------
 ------------------------------------------
