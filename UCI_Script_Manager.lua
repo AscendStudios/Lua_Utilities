@@ -39,7 +39,7 @@ function layer_events(ctls)
   for name, ctl in pairs(ctls) do
     ctl.EventHandler = function()
       name, exclusion = get_embedded_exlusion(name)
-      local data = {['String'] = name, ['Boolean'] = ctl.Boolean}
+      local data = {['Name']=NAME, ['String'] = name, ['Boolean'] = ctl.Boolean}
       if exclusion then data['ExclusionGroup'] = exclusion end
       main.Layer_json.String = json.encode(data)
       --util.exclude(ctl, ctls)
@@ -73,3 +73,5 @@ Other_Controls = other_controls(Controls)
 
 layer_events(Layer_Controls)
 page_events(Page_Controls)
+
+print(NAME)
