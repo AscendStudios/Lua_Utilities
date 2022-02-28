@@ -30,8 +30,8 @@ function table.reverse(self)
 end
 
 function table.print(self)
-  local name = require "json"
-  print(json.encode(self))
+  local rj = require "rapidjson"
+  print(rj.encode(self, {pretty=true}))
 end
 
 function table.keys(self)
@@ -40,4 +40,31 @@ function table.keys(self)
     table.insert(keyset, key)
   end
   return keyset
+end
+
+function table.values(self)
+  local valset = {}
+  for i, v in pairs(self) do
+    valset[v] = i
+  end
+  return valset
+end
+
+function table.test(self, func, ...)
+  --[[
+  This function will test if each item in a table return true given
+  the provided condition. The condition should be given as a function
+  that will return a boolean value. The function's first parameter
+  must be the table variable. afterwards, additional arguments can be
+  provided.
+  --]]
+  local counter = 0
+  for key, value in pairs(self) do
+    if func(value, ...) then
+      counter = counter + 1
+    else
+      break
+    end
+  end
+  return counter == #self
 end
