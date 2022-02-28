@@ -3,8 +3,8 @@
 Advanced string functions that are not implemented in LUA
 
   To use:
-    require("Advanced_Tables")
-    Then call as expeted - table.reverse(tbl)
+    require("Advanced_String")
+    Then call as expeted - string.split(string)
 
 --]]
 function string.trim (s)
@@ -25,5 +25,3 @@ function string.split(self, sep, regex)
   if #list == 0 then list = self end
   return list
 end
-
-return string
