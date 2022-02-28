@@ -41,7 +41,7 @@ function layer_events(ctls)
       name, exclusion = get_embedded_exlusion(name)
       local data = {['Name']=NAME, ['String'] = name, ['Boolean'] = ctl.Boolean}
       if exclusion then data['ExclusionGroup'] = exclusion end
-      main.Layer_json.String = json.encode(data)
+      main.UCI_JSON.String = json.encode(data)
       --util.exclude(ctl, ctls)
     end
   end
