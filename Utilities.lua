@@ -10,12 +10,15 @@ function Utilities.hello()
 end
 
 
-function Utilities.draw_icon(icon_name)
-  i = json.encode({
+function Utilities.draw_icon(icon_name, color)
+  local data = {
     DrawChrome = true,
     IconString = icons[icon_name]
-  })
-  return i
+  }
+  if color then
+    data.Color = color
+  end
+  return json.encode(data)
 end
 
 function read_file(file_path)
