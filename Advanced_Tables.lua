@@ -68,3 +68,14 @@ function table.test(self, func, ...)
   end
   return counter == #self
 end
+
+-- Function to count elements in a table.
+-- Default uses values, but keys can be used by setting keys = true
+function table.count(self, element, keys)
+  local count = 0
+  for idx, item in pairs(self) do
+    if keys then item = idx end
+    if item == element then count = count + 1 end
+  end
+  return count
+end
