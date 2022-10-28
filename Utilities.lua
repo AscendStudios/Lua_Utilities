@@ -32,6 +32,17 @@ function Utilities.read_xml(file_path)
   return xml.eval(read_file(file_path))
 end
 
+
+-- Add the dir library to Utilites
+Utilities.dir = dir
+-- Function will get or create and get a directory
+Utilities.dir.getCreate = function(path)
+  if not dir.get(path) then
+    dir.create(path)
+  end
+  return dir.get(path)
+end
+
 -- Updated to pairs instead of ipairs to handle string indexing--
 function Utilities.exclude( ctl, ctl_table )
   if ctl.Boolean then
