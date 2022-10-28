@@ -28,6 +28,12 @@ function read_file(file_path)
   return data
 end
 
+function write_file(file_path, data)
+  local file = io.open(file_path, 'w+')
+  file:write(data)
+  file:close()
+ end
+
 function Utilities.read_xml(file_path)
   return xml.eval(read_file(file_path))
 end
