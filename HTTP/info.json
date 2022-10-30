@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "type": "LuaModule",
+    "author": "Casey@AscendStudios.com",
+    "description": "This module provides some default HTTP functions",
+    "requiredVersion" : "9.5"
+}
