@@ -3,5 +3,5 @@
     "type": "LuaModule",
     "author": "Casey@AscendStudios.com",
     "description": "This module hot patches the table library to allow advanced functions.",
-    "requiredVersion" : "9.5"
+    "requiredVersion" : "9.4"
 }

@@ -3,5 +3,5 @@
     "type": "LuaModule",
     "author": "Casey@AscendStudios.com",
     "description": "This module provides some file manipulation functions",
-    "requiredVersion" : "9.5"
+    "requiredVersion" : "9.4"
 }
