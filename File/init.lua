@@ -1,16 +1,16 @@
-local require "luaXML"
+local xml = require "luaXML"
 local rj = require "rapidjson"
 
 local file = {}
 
-local function file.read(file_path)
+function file.read(file_path)
     local file = io.open(file_path, 'r')
     data = file:read("*a")
     file:close()
     return data
 end
 
-local function file.write(file_path, data)
+function file.write(file_path, data)
     local file = io.open(file_path, 'w+')
     file:write(data)
     file:close()
