@@ -46,3 +46,5 @@ file.dir.getCreate = function(path)
     end
     return file.dir.get(path)
 end
+
+return file
