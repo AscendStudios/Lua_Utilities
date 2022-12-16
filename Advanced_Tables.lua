@@ -20,7 +20,7 @@ function table.contains(self, element, ...)
       return true, index
     end
   end
-  return false
+  return false, nil
 end
 
 function table.reverse(self)
