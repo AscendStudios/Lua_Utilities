@@ -4,23 +4,23 @@ local rj = require "rapidjson"
 local file = {}
 
 function file.read(file_path)
-    local file = io.open(file_path, 'r')
-    data = file:read("*a")
-    file:close()
+    local f = io.open(file_path, 'r')
+    local data = f:read("*a")
+    f:close()
     return data
 end
 
 function file.write(file_path, data)
-    local file = io.open(file_path, 'w+')
-    file:write(data)
-    file:close()
+    local f = io.open(file_path, 'w+')
+    f:write(data)
+    f:close()
 end
 
 file.xml = {
     read = function(file_path)
         return xml.eval(file.read(file_path))
     end,
-    }
+}
 
 file.json = {
     read = function(file_path)
@@ -34,7 +34,7 @@ file.json = {
             print("data should be a table")
         end
     end
-    }
+}
 
 -- Add the dir library to the file library
 file.dir = dir

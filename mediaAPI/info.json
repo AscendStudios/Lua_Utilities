@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "type": "LuaModule",
+    "author": "Casey@AscendStudios.com",
+    "description": "Wrapper module for the MediaApi",
+    "requiredVersion": "9.4"
+}

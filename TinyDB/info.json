@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "type": "LuaModule",
+    "author": "Casey@AscendStudios.com",
+    "description": "This module is allows for you to create a small centralized database to store data.",
+    "requiredVersion": "9.4"
+}

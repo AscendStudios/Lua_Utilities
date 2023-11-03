@@ -10,12 +10,12 @@ Advanced Table functions that are not implemented in LUA
 
 local table = table
 
-local function table.is_empty(self)
+function table.is_empty(self)
   return #self == 0
 end
 
 -- Adding a return on index as an option to grab --
-local function table.contains(self, element, ...)
+function table.contains(self, element, ...)
   for index, value in pairs(self) do
     if ... then value = value[...] end
     if value == element then
@@ -25,18 +25,18 @@ local function table.contains(self, element, ...)
   return false
 end
 
-local function table.reverse(self)
+function table.reverse(self)
   for i=1, math.floor(#self / 2) do
     self[i], self[#tbl - i + 1] = self[#tbl - i + 1], self[i]
   end
 end
 
-local function table.print(self)
+function table.print(self)
   local rj = require "rapidjson"
   print(rj.encode(self, {pretty=true}))
 end
 
-local function table.keys(self)
+function table.keys(self)
   local keyset={}
   for key in pairs(self) do
     table.insert(keyset, key)
@@ -44,7 +44,7 @@ local function table.keys(self)
   return keyset
 end
 
-local function table.values(self)
+function table.values(self)
   local valset = {}
   for i, v in pairs(self) do
     valset[v] = i
@@ -52,7 +52,7 @@ local function table.values(self)
   return valset
 end
 
-local function table.test(self, func, ...)
+function table.test(self, func, ...)
   --[[
   This function will test if each item in a table return true given
   the provided condition. The condition should be given as a function
@@ -73,7 +73,7 @@ end
 
 -- Function to count elements in a table.
 -- Default uses values, but keys can be used by setting keys = true
-local function table.count(self, element, keys)
+function table.count(self, element, keys)
   local count = 0
   for idx, item in pairs(self) do
     if keys then item = idx end

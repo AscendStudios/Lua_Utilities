@@ -10,11 +10,11 @@ This Module hot patches the string library with additional methods
 --]]
 local string = string
 
-local function string.trim (s)
-  return s:match'^%s*(.*)'
+function string.trim(s)
+  return string.match(s, "^%s*(.*)")
 end
 
-local function string.split(self, sep, regex)
+function string.split(self, sep, regex)
   local list = {}
   local position = 1
   if not regex then mode = "plain" end

@@ -3,5 +3,5 @@
     "type": "LuaModule",
     "author": "Casey@AscendStudios.com",
     "description": "This module provides some Utility functions",
-    "requiredVersion" : "9.4"
+    "requiredVersion": "9.6"
 }
